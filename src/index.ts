@@ -1,10 +1,11 @@
 import 'dotenv/config';
-import { Client } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
 
 const client = new Client({
     intents: [
-        'Guilds',
-        'GuildMessages'
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ],
 });
 
