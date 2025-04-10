@@ -13,3 +13,6 @@
 
 # debug
 npm-debug. log*
+
+# env files
+.env
