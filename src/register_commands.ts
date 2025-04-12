@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { REST, Routes } from 'discord.js';
+import { Guild, REST, Routes } from 'discord.js';
 
 const commands = [
     {
@@ -23,13 +23,21 @@ const commands = [
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
 
-try {
-    console.log('Refreshing Slash Commands');
+(async () => {
+    try {
+        console.log('Refreshing Slash Commands');
 
-    await rest.put(Routes.applicationCommands(process.env.APP_ID!), { body: commands });
+        await rest.put(
+            Routes.applicationGuildCommands(
+                process.env.APP_ID!,
+                process.env.GUILD_ID!,
+            ), 
+            { body: commands }
+        );
 
-    console.log('Successfully Reloaded Slash Commands');
-    }
-catch (e) {
-    console.error(e);
-}  
+        console.log('Successfully Reloaded Slash Commands');
+        }
+    catch (e) {
+        console.error(e);
+    }  
+});
