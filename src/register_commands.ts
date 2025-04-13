@@ -7,7 +7,7 @@ const commands = [
         description: 'Registers Donder ID with a Discord member',
         options: [
             {
-                name: 'donder id',
+                name: 'donder-id',
                 description: 'Found in donder hiroba',
                 type: ApplicationCommandOptionType.String,
                 required: true,
@@ -44,8 +44,8 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
         );
 
         console.log('Successfully Reloaded Slash Commands');
-        }
+    }
     catch (e) {
-        console.error('ERROR:' + e);
+        console.log(`ERROR: ${e}`);
     }  
-});
+})();
