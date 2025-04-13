@@ -1,10 +1,18 @@
 import 'dotenv/config';
-import { Guild, REST, Routes } from 'discord.js';
+import { REST, Routes, ApplicationCommandOptionType } from 'discord.js';
 
 const commands = [
     {
         name: 'register',
         description: 'Registers Donder ID with a Discord member',
+        options: [
+            {
+                name: 'donder id',
+                description: 'Found in donder hiroba',
+                type: ApplicationCommandOptionType.String,
+                required: true,
+            },
+        ],
     },
     {
         name: 'unregister',
@@ -38,6 +46,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
         console.log('Successfully Reloaded Slash Commands');
         }
     catch (e) {
-        console.error(e);
+        console.error('ERROR:' + e);
     }  
 });
