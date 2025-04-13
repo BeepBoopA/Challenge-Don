@@ -1,11 +1,11 @@
 import 'dotenv/config';
-import { Client, GatewayIntentBits, GuildEmoji } from 'discord.js';
+import { Client, IntentsBitField } from 'discord.js';
 
 const client = new Client({
     intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        IntentsBitField.Flags.Guilds,
+        IntentsBitField.Flags.GuildMessages,
+        IntentsBitField.Flags.MessageContent
     ],
 });
 
