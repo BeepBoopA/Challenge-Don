@@ -23,10 +23,6 @@ const commands = [
         description: 'Views current challenge',
     },
     {
-        name: 'leaderboard',
-        description: 'Views leaderboard',
-    },
-    {
         name: 'setchallenge',
         description: 'set 3 charts for this seasons challenge',
         options: [
@@ -34,20 +30,21 @@ const commands = [
                 name: 'chart-1',
                 description: 'select 1st chart for challenge',
                 type: ApplicationCommandOptionType.String, // type: API to inaya's database, maybe interface / type called 'charts' of something
-                requiired: true,
+                required: true,
             },
             {
                 name: 'chart-2',
                 description: 'select 2nd chart for challenge',
                 type: ApplicationCommandOptionType.String, // type: API to inaya's database, maybe interface / type called 'charts' of something
-                requiired: true,
+                required: true,
             },
             {
                 name: 'chart-3',
                 description: 'select 3rd chart for challenge',
                 type: ApplicationCommandOptionType.String, // type: API to inaya's database, maybe interface / type called 'charts' of something
-                requiired: true,
+                required: true,
             },
+            
         ]
     }
 ];
