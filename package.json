@@ -1,0 +1,28 @@
+{
+  "name": "challenge-don",
+  "version": "1.0.0",
+  "description": "Challenge Bot For Taiko no Tatsujin on Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeepBoopA/Challenge-Don.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeepBoopA/Challenge-Don/issues"
+  },
+  "homepage": "https://github.com/BeepBoopA/Challenge-Don#readme",
+  "dependencies": {
+    "discord.js": "^14.20.0",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0"
+  }
+}
