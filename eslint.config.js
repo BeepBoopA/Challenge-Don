@@ -1,6 +1,6 @@
-const js = require('@eslint/js');
+import js from "@eslint/js";
 
-modules.export = [
+export default [
     js.configs.recommended,
     {
         languageOptions: {
