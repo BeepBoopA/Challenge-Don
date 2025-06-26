@@ -3,3 +3,9 @@ node_modules
 
 # Environment Variables
 .env
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
