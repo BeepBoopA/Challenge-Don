@@ -1,8 +1,8 @@
 import { firefox } from 'playwright';
 
 const checkValidDonderID = async (donderID) => {
-    const broswer = await firefox.launch();
-    const page = broswer.newPage();
+    const browser = await firefox.launch();
+    const page = await browser.newPage();
     await page.goto('https://donderhiroba.jp/login.php');
     await page.getByRole('img', { name: 'ログイン' }).click();
 
@@ -23,3 +23,25 @@ const checkValidDonderID = async (donderID) => {
 
     return donderExists;
 }   
+
+export const linkDonderToDiscord = async (donderID) => {
+    // Pre-validation
+    if (donderID.length() != 12) {
+        return 'Invalid Length'
+    }
+    if (!(/^\d+$/.test(donderID))) {
+        return 'Invalid Character(s)'
+    }
+
+    // Scrape Test
+    if (await checkValidDonderID(donderID)) {
+        console.log('Valid ID');
+    }
+    else {
+        console.log('Invalid ID');
+    }
+}
+
+// TODO: Add try catch
+// TODO: Link to database
+// TODO: Add session tokens & stuff

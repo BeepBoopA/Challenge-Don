@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
+import { linkDonderToDiscord } from '../../modules/checkValidDonderID.js';
 
 export default {
     data: new SlashCommandBuilder()
@@ -10,10 +11,10 @@ export default {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        const user = interaction.user.namename;
+        const user = interaction.user.username;
         const donderID = interaction.options.getString('donder-id');
 
         await interaction.reply(`Linking Donder: ${user} & ${donderID}`);
-        
+        linkDonderToDiscord(donderID);
     },
 };
