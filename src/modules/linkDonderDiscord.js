@@ -26,11 +26,13 @@ const checkValidDonderID = async (donderID) => {
 
 export const linkDonderToDiscord = async (donderID) => {
     // Pre-validation
-    if (donderID.length() != 12) {
-        return 'Invalid Length'
+    if (donderID.length != 12) {
+        console.log('Invalid Length');
+        return;
     }
     if (!(/^\d+$/.test(donderID))) {
-        return 'Invalid Character(s)'
+        console.log('Invalid Character(s)');
+        return;
     }
 
     // Scrape Test

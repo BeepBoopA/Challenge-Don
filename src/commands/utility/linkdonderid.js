@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { linkDonderToDiscord } from '../../modules/checkValidDonderID.js';
+import { linkDonderToDiscord } from '../../modules/linkDonderDiscord.js';
 
 export default {
     data: new SlashCommandBuilder()
