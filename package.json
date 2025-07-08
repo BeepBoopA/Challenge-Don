@@ -4,7 +4,9 @@
   "description": "Challenge Bot For Taiko no Tatsujin on Discord",
   "main": "src\\index.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BeepBoopA/Challenge-Don.git"
@@ -25,6 +27,7 @@
     "@playwright/test": "^1.53.1",
     "@types/node": "^24.0.4",
     "eslint": "^9.29.0",
+    "nodemon": "^3.1.10",
     "playwright": "^1.53.1"
   }
 }
