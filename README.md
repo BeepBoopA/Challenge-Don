@@ -19,4 +19,6 @@ Challenge Bot For Taiko no Tatsujin on Discord
     BOT_5_EMAIL=""
     BOT_5_PASSWORD=""
 
+    # TODO: Add database stuff
+
 
