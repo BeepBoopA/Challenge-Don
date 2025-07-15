@@ -1,4 +1,5 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
+import db from '../database/database.js';
 
 const pageMain = new EmbedBuilder()
     .setColor(0x0099FF)

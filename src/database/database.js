@@ -17,7 +17,7 @@ db.exec(`
 
     CREATE TABLE IF NOT EXISTS charts (
         chart_id        INTEGER PRIMARY KEY AUTOINCREMENT,
-        title           TEXT,
+        name            TEXT,
         artist          TEXT
     );
 
@@ -34,8 +34,8 @@ db.exec(`
         challenge_id    INTEGER NOT NULL,
         chart_id        INTEGER NOT NULL,
         game_id         TEXT NOT NULL,
-        score           INTERGER,
-        
+        score           INTEGER,
+
         PRIMARY KEY (challenge_id, chart_id, game_id),
         FOREIGN KEY (challenge_id, chart_id) REFERENCES challenge_charts(challenge_id, chart_id)
     );
