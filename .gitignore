@@ -4,6 +4,9 @@ node_modules
 # Environment Variables
 .env
 
+# Database
+*.db
+
 # Playwright
 /test-results/
 /playwright-report/
