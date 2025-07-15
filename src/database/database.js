@@ -5,8 +5,8 @@ const db = new Database('data/data.db');
 // Tables - hopefully this doesnt break somehow...
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
-        guild_id    TEXT PRIMARY KEY,
-        donder_id   TEXT NOT NULL
+        guild_id        TEXT PRIMARY KEY,
+        donder_id       TEXT NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS challenges (
@@ -24,6 +24,7 @@ db.exec(`
     CREATE TABLE IF NOT EXISTS challenge_charts (
         challenge_id    INTEGER NOT NULL,
         chart_id        INTEGER NOT NULL,
+
         PRIMARY KEY (challenge_id, chart_id),
         FOREIGN KEY (challenge_id) REFERENCES challenges(challenge_id),
         FOREIGN KEY (chart_id) REFERENCES charts(chart_id)
@@ -34,6 +35,7 @@ db.exec(`
         chart_id        INTEGER NOT NULL,
         game_id         TEXT NOT NULL,
         score           INTERGER,
+        
         PRIMARY KEY (challenge_id, chart_id, game_id),
         FOREIGN KEY (challenge_id, chart_id) REFERENCES challenge_charts(challenge_id, chart_id)
     );
