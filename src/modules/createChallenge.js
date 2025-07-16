@@ -1,6 +1,6 @@
 import db from "../database/database.js";
 
-export const setChallenge = async (challengeName, song1, song2, song3) => {
+export const createChallenge = async (challengeName, song1, song2, song3) => {
     // Insert Challenge
     let insert = null;
 

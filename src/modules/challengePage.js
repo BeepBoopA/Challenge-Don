@@ -5,112 +5,54 @@ const pageMain = new EmbedBuilder()
     .setColor(0x0099FF)
     .setTitle('Overview')
     .addFields(
-        {
-            name: 'Chart 1', value: 'chart 1 image thing', inline: true
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff', inline: true
-        },
-        {
-            name: '', value: '', inline: false
-        },
+        { name: 'Chart 1', value: 'chart 1 image thing', inline: true },
+        { name: 'Current Leader', value: 'profile pic and stuff', inline: true },
+        { name: '', value: '', inline: false },
     )
     .addFields(
-        {
-            name: 'Chart 2', value: 'chart 2 image thing', inline: true
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff', inline: true
-        },
-        {
-            name: '', value: '', inline: false
-        },
+        { name: 'Chart 2', value: 'chart 2 image thing', inline: true },
+        { name: 'Current Leader', value: 'profile pic and stuff', inline: true },
+        { name: '', value: '', inline: false },
     )
     .addFields(
-        {
-            name: 'Chart 3', value: 'chart 3 image thing', inline: true
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff', inline: true
-        },
-        {
-            name: '', value: '', inline: false
-        },
+        { name: 'Chart 3', value: 'chart 3 image thing', inline: true },
+        { name: 'Current Leader', value: 'profile pic and stuff', inline: true },
+        { name: '', value: '', inline: false },
     );
 
-const pageChart1 = new EmbedBuilder()
-    .setColor(0x0099FF)
-    .setTitle('Chart 1')
-    .addFields(
-        {
-            name: '', value: 'chart 1 image thing',
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff',
-        },
-        {
-            name: '2nd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '3rd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '', value: '',
-        },
-        {
-            name: 'User Placement', value: 'profile pic and stuff',
-        },
-    );
+const createChartPage = (chartName, image) => {
+    return new EmbedBuilder()
+        .setColor(0x0099FF)
+        .setTitle(chartName)
+        .addFields(
+            { name: '', value: image },
+            { name: 'Current Leader', value: 'profile pic and stuff' },
+            { name: '2nd Place', value: 'profile pic and stuff' },
+            { name: '3rd Place', value: 'profile pic and stuff' },
+            { name: '', value: '' },
+            { name: 'User Placement', value: 'profile pic and stuff' },
+        );
+}
 
-const pageChart2 = new EmbedBuilder()
-    .setColor(0x0099FF)
-    .setTitle('Chart 2')
-    .addFields(
-        {
-            name: '', value: 'chart 2 image thing',
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff',
-        },
-        {
-            name: '2nd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '3rd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '', value: '',
-        },
-        {
-            name: 'User Placement', value: 'profile pic and stuff',
-        },
-    );
+const handleCharts = (challengeID, images) => {
+    const charts = db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
+                               WHERE cc.challenge_id = ${challengeID}`).all();
+    const chartsEmbed = [];
+        
+    for (let i = 0; i < charts.length; i++) {
+        console.log('Chart: ', charts[i]);
+        chartsEmbed.push(createChartPage(charts[i]['name'], `${images}.png idk`));
 
-const pageChart3 = new EmbedBuilder()
-    .setColor(0x0099FF)
-    .setTitle('Chart 3')
-    .addFields(
-        {
-            name: '', value: 'chart 3 image thing',
-        },
-        {
-            name: 'Current Leader', value: 'profile pic and stuff',
-        },
-        {
-            name: '2nd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '3rd Place', value: 'profile pic and stuff',
-        },
-        {
-            name: '', value: '',
-        },
-        {
-            name: 'User Placement', value: 'profile pic and stuff',
-        },
-    );
+        // Get Current Leader
+        // Get 2nd Place
+        // Get 3rd Place
+        // Get User Place
+    }
 
-export const pages = [pageMain, pageChart1, pageChart2, pageChart3];
+    return chartsEmbed;
+}
+
+export const pages = [pageMain, ...handleCharts(1, 'test')]; // Repalce the parameters when finshed testing
 
 export const buttonActionRow = new ActionRowBuilder()
     .addComponents(
@@ -124,4 +66,4 @@ export const buttonActionRow = new ActionRowBuilder()
             .setStyle(ButtonStyle.Primary),
     );
 
-// Work with chart 1 since chart 2 and 3 are replicas
+// TODO: handleCharts leaderboard & make pageMain a function so it can display the charts
