@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { setChallenge } from '../../modules/createChallenge.js';
+import { createChallenge } from '../../modules/createChallenge.js';
 
 export default {
     data: new SlashCommandBuilder()
@@ -35,7 +35,7 @@ export default {
             const song2 = interaction.options.getString("song-2");
             const song3 = interaction.options.getString("song-3");
 
-            setChallenge(challengeName, song1, song2, song3);
+            createChallenge(challengeName, song1, song2, song3);
         }
         catch(e) {
             console.error(e);
