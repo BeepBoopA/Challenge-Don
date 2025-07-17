@@ -33,11 +33,12 @@ db.exec(`
     CREATE TABLE IF NOT EXISTS scores (
         challenge_id    INTEGER NOT NULL,
         chart_id        INTEGER NOT NULL,
-        game_id         TEXT NOT NULL,
+        donder_id       TEXT NOT NULL,
         score           INTEGER,
 
-        PRIMARY KEY (challenge_id, chart_id, game_id),
-        FOREIGN KEY (challenge_id, chart_id) REFERENCES challenge_charts(challenge_id, chart_id)
+        PRIMARY KEY (challenge_id, chart_id, donder_id),
+        FOREIGN KEY (challenge_id, chart_id) REFERENCES challenge_charts(challenge_id, chart_id),
+        FOREIGN KEY (donder_id) REFERENCES users(donder_id)
     );
 `)
 
