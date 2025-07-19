@@ -1,24 +1,41 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import db from '../database/database.js';
 
-const pageMain = new EmbedBuilder()
-    .setColor(0x0099FF)
-    .setTitle('Overview')
-    .addFields(
-        { name: 'Chart 1', value: 'chart 1 image thing', inline: true },
-        { name: '1st Place', value: 'profile pic and stuff', inline: true },
-        { name: '', value: '', inline: false },
-    )
-    .addFields(
-        { name: 'Chart 2', value: 'chart 2 image thing', inline: true },
-        { name: '1st Place', value: 'profile pic and stuff', inline: true },
-        { name: '', value: '', inline: false },
-    )
-    .addFields(
-        { name: 'Chart 3', value: 'chart 3 image thing', inline: true },
-        { name: '1st Place', value: 'profile pic and stuff', inline: true },
-        { name: '', value: '', inline: false },
-    );
+/*
+    images (property)
+        need to be a array of exactly 3 images
+*/
+
+const createPageMain = (challengeID, images) => { 
+    const charts = getCharts(challengeID);
+    const leaders = [];
+
+    console.log(charts[0]['chart_id']);
+
+    for (let i = 0; i < charts.length; i++) {
+        const scores = getUserScores(challengeID, charts[i]).map((u) => u.score);
+        leaders.push(scores[0] ?? 'No score');
+    }
+
+    return new EmbedBuilder()
+        .setColor(0x0099FF)
+        .setTitle('Overview')
+        .addFields(
+            { name: 'Chart 1', value: images[0], inline: true },
+            { name: '1st Place', value: `${leaders[0]} replace w/ discord img`, inline: true },
+            { name: '', value: '', inline: false },
+        )
+        .addFields(
+            { name: 'Chart 2', value: images[1], inline: true },
+            { name: '1st Place', value: `${leaders[1]} replace w/ discord img`, inline: true },
+            { name: '', value: '', inline: false },
+        )
+        .addFields(
+            { name: 'Chart 3', value: images[2], inline: true },
+            { name: '1st Place', value: `${leaders[2]} replace w/ discord img`, inline: true },
+            { name: '', value: '', inline: false },
+        );
+}
 
 const createChartEmbed = (chartName, image, firstPlace, secondPlace, thirdPlace, userPlace) => {
     return new EmbedBuilder()
@@ -35,17 +52,13 @@ const createChartEmbed = (chartName, image, firstPlace, secondPlace, thirdPlace,
 }
 
 const handleChartsEmbed = (challengeID, images) => {
-    const charts = db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
-                               WHERE cc.challenge_id=${challengeID}`).all();
+    const charts = getCharts(challengeID);
     const chartsEmbed = [];
         
     for (let i = 0; i < charts.length; i++) {
         console.log('Chart: ', charts[i]);
 
-        const userChartScores = db.prepare(`SELECT u.guild_id, s.* FROM charts c NATURAL JOIN challenge_charts cc NATURAL JOIN scores s NATURAL JOIN users u
-                                   WHERE cc.challenge_id=${challengeID} AND cc.chart_id=${charts[i]['chart_id']}
-                                   ORDER BY s.score DESC
-                                   `).all();
+        const userChartScores = getUserScores(challengeID, charts[i]);
 
         // Get Scores
         const [firstPlace = 'No score', secondPlace = 'No score', thirdPlace = 'No score'] =
@@ -60,7 +73,19 @@ const handleChartsEmbed = (challengeID, images) => {
     return chartsEmbed;
 }
 
-export const pages = [pageMain, ...handleChartsEmbed(1, 'test')]; // Replace the parameters when finshed testing
+const getCharts = (challengeID) => {
+    return db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
+                       WHERE cc.challenge_id=${challengeID}`).all();
+}
+
+const getUserScores = (challengeID, chart) => {
+    return db.prepare(`SELECT u.guild_id, s.* FROM charts c NATURAL JOIN challenge_charts cc NATURAL JOIN scores s NATURAL JOIN users u
+                       WHERE cc.challenge_id=${challengeID} AND cc.chart_id=${chart['chart_id']}
+                       ORDER BY s.score DESC
+                      `).all();
+}
+
+export const pages = [createPageMain(1, ['test1', 'test2', 'test3']), ...handleChartsEmbed(1, 'test')]; // Replace the parameters when finshed testing
 
 export const buttonActionRow = new ActionRowBuilder()
     .addComponents(
@@ -74,7 +99,7 @@ export const buttonActionRow = new ActionRowBuilder()
             .setStyle(ButtonStyle.Primary),
     );
 
-// TODO: make pageMain a function so it can display the charts
+// TODO: refactor this god awful code why are there so many functions ahhhhhh
 // TODO: make insert many (https://github.com/WiseLibs/better-sqlite3/blob/HEAD/docs/api.md)
 // TODO: make test cases to test score system
 // TODO: add userPlacement in handleChart
