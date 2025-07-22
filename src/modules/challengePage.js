@@ -63,9 +63,10 @@ class ChallengeBuilder {
             const [firstPlace = 'No score', secondPlace = 'No score', thirdPlace = 'No score'] =
                 userChartScores.map(u => u.score);
             
-            const userPlace = 'what the sigma (this means implement)';
+            const userPlaceObj = this.getUserPlacement();
+            const userPlaceStr = userPlaceObj['score'] + userPlaceObj['index'];
 
-            const embed = this.createChartEmbed(`${charts[i]['name']}`, 'img', firstPlace, secondPlace, thirdPlace, userPlace);
+            const embed = this.createChartEmbed(`${charts[i]['name']}`, 'img', firstPlace, secondPlace, thirdPlace, userPlaceStr);
             chartsEmbed.push(embed);
         }
 
@@ -78,10 +79,19 @@ class ChallengeBuilder {
     }
 
     getUserScores(challengeID, chart) {
-        return db.prepare(`SELECT u.guild_id, s.* FROM charts c NATURAL JOIN challenge_charts cc NATURAL JOIN scores s NATURAL JOIN users u
+        return db.prepare(`SELECT u.guild_id, s.score FROM charts c NATURAL JOIN challenge_charts cc NATURAL JOIN scores s NATURAL JOIN users u
                         WHERE cc.challenge_id=${challengeID} AND cc.chart_id=${chart['chart_id']}
                         ORDER BY s.score DESC
                         `).all();
+    }
+
+    getUserPlacement(challengeID, chart) {
+        const scores = this.getUserScores(challengeID, chart);
+        const indexedScores = scores.map((u, index) => ({...u, index}));
+        
+        // This SHOULD return { guild_id, score, index }
+        // please dont break :pray:
+        return indexedScores.filter((u) => this.userID === guild_id);
     }
 
     setUserId(userID) { this.userID = userID; }
@@ -110,4 +120,4 @@ export default ChallengeBuilder;
 // TODO: refactor this god awful code why are there so many functions ahhhhhh
 // TODO: make insert many (https://github.com/WiseLibs/better-sqlite3/blob/HEAD/docs/api.md)
 // TODO: make test cases to test score system
-// TODO: add userPlacement in handleChart
+// TODO: Make something where unregistered users can view challenge (user placement doesnt show up)
