@@ -18,7 +18,7 @@ export default {
         });
 
         const collector = message.createMessageComponentCollector({ time: 60000 }); // 1 minute of button clicking aoisfaj
-        collector.on('collect', button => {
+        collector.on('collect', async button => {
             if (button.customId === 'prev') {
                 curPage = curPage > 0 ? --curPage : pages.length - 1;
             }

@@ -61,10 +61,10 @@ class ChallengeBuilder {
 
             // Get Scores
             const [firstPlace = 'No score', secondPlace = 'No score', thirdPlace = 'No score'] =
-                userChartScores.map(u => u.score);
-            
-            const userPlaceObj = this.getUserPlacement();
-            const userPlaceStr = userPlaceObj['score'] + userPlaceObj['index'];
+                userChartScores.map((u) => u.score);
+
+            const userPlaceObj = this.getUserPlacement(challengeID, charts[i]);
+            const userPlaceStr = userPlaceObj['score'];
 
             const embed = this.createChartEmbed(`${charts[i]['name']}`, 'img', firstPlace, secondPlace, thirdPlace, userPlaceStr);
             chartsEmbed.push(embed);
@@ -87,11 +87,12 @@ class ChallengeBuilder {
 
     getUserPlacement(challengeID, chart) {
         const scores = this.getUserScores(challengeID, chart);
-        const indexedScores = scores.map((u, index) => ({...u, index}));
-        
+        const userScore = scores.map((u, index) => ({...u, index}))
+                                .find((u) => this.userID === guild_id);
+                        
         // This SHOULD return { guild_id, score, index }
         // please dont break :pray:
-        return indexedScores.filter((u) => this.userID === guild_id);
+        return userScore;
     }
 
     setUserId(userID) { this.userID = userID; }
