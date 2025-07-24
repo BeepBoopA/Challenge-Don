@@ -89,7 +89,11 @@ class ChallengeBuilder {
         const scores = this.getUserScores(challengeID, chart);
         const userScore = scores.map((u, index) => ({...u, index}))
                                 .find((u) => this.userID === guild_id);
-                        
+                                
+        if (userScore === null || userScore === undefined) {
+            return { guild_id: this.userID, score: 0, index: 'last' };
+        }
+
         // This SHOULD return { guild_id, score, index }
         // please dont break :pray:
         return userScore;
