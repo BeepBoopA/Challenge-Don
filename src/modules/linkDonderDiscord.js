@@ -46,4 +46,5 @@ export const linkDonderToDiscord = async (donderID) => {
 
 // TODO: Add try catch
 // TODO: Link to database
-// TODO: Add session tokens & stuff
+// TODO: Dont allow link if discordID is already linked
+// TODO: Unlink function
