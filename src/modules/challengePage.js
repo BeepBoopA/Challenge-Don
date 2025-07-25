@@ -1,5 +1,5 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
-import db from '../database/database.js';
+import { getCharts, getScores, getUserPlacement } from '../database/functions/challengeCharts.js';
 
 /*
     images (property)
@@ -9,12 +9,14 @@ import db from '../database/database.js';
 class ChallengeBuilder {
     static userID = null;
 
+    setUserId(userID) { this.userID = userID; }
+
     createPageMain(challengeID, images) { 
-        const charts = this.getCharts(challengeID);
+        const charts = getCharts(challengeID);
         const leaders = [];
 
         for (let i = 0; i < charts.length; i++) {
-            const scores = this.getUserScores(challengeID, charts[i]).map((u) => u.score);
+            const scores = getScores(challengeID, charts[i]).map((u) => u.score);
             leaders.push(scores[0] ?? 'No score');
         }
 
@@ -53,17 +55,17 @@ class ChallengeBuilder {
     }
 
     handleChartsEmbed(challengeID, images) {
-        const charts = this.getCharts(challengeID);
+        const charts = getCharts(challengeID);
         const chartsEmbed = [];
             
         for (let i = 0; i < charts.length; i++) {
-            const userChartScores = this.getUserScores(challengeID, charts[i]);
+            const userChartScores = getScores(challengeID, charts[i]);
 
             // Get Scores
             const [firstPlace = 'No score', secondPlace = 'No score', thirdPlace = 'No score'] =
                 userChartScores.map((u) => u.score);
 
-            const userPlaceObj = this.getUserPlacement(challengeID, charts[i]);
+            const userPlaceObj = getUserPlacement(challengeID, charts[i], this.userID);
             const userPlaceStr = userPlaceObj['score'];
 
             const embed = this.createChartEmbed(`${charts[i]['name']}`, 'img', firstPlace, secondPlace, thirdPlace, userPlaceStr);
@@ -72,34 +74,6 @@ class ChallengeBuilder {
 
         return chartsEmbed;
     }
-
-    getCharts(challengeID) {
-        return db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
-                        WHERE cc.challenge_id=${challengeID}`).all();
-    }
-
-    getUserScores(challengeID, chart) {
-        return db.prepare(`SELECT u.guild_id, s.score FROM charts c NATURAL JOIN challenge_charts cc NATURAL JOIN scores s NATURAL JOIN users u
-                        WHERE cc.challenge_id=${challengeID} AND cc.chart_id=${chart['chart_id']}
-                        ORDER BY s.score DESC
-                        `).all();
-    }
-
-    getUserPlacement(challengeID, chart) {
-        const scores = this.getUserScores(challengeID, chart);
-        const userScore = scores.map((u, index) => ({...u, index}))
-                                .find((u) => this.userID === guild_id);
-                                
-        if (userScore === null || userScore === undefined) {
-            return { guild_id: this.userID, score: 0, index: 'last' };
-        }
-
-        // This SHOULD return { guild_id, score, index }
-        // please dont break :pray:
-        return userScore;
-    }
-
-    setUserId(userID) { this.userID = userID; }
 
     // Replace the parameters when finshed testing
     pages = [this.createPageMain(1, ['test1', 'test2', 'test3']), ...this.handleChartsEmbed(1, 'test')];
@@ -122,7 +96,5 @@ class ChallengeBuilder {
 
 export default ChallengeBuilder;
 
-// TODO: refactor this god awful code why are there so many functions ahhhhhh
-// TODO: make insert many (https://github.com/WiseLibs/better-sqlite3/blob/HEAD/docs/api.md)
 // TODO: make test cases to test score system
 // TODO: Make something where unregistered users can view challenge (user placement doesnt show up)
