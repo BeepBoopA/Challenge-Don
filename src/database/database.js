@@ -5,7 +5,7 @@ const db = new Database('data/data.db');
 // Tables - hopefully this doesnt break somehow...
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
-        guild_id        TEXT PRIMARY KEY,
+        discord_id      TEXT PRIMARY KEY,
         donder_id       TEXT NOT NULL
     );
 
