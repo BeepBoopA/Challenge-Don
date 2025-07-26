@@ -1,6 +1,7 @@
 import { firefox } from 'playwright';
+import { checkUserExists } from '../database/functions/user';
 
-const checkValidDonderID = async (donderID) => {
+const checkValidDonder = async (donderID) => {
     const browser = await firefox.launch();
     const page = await browser.newPage();
     await page.goto('https://donderhiroba.jp/login.php');
@@ -24,9 +25,12 @@ const checkValidDonderID = async (donderID) => {
     return donderExists;
 }   
 
-export const linkDonderToDiscord = async (donderID) => {
-    // Pre-validation
-    if (donderID.length != 12) {
+const checkValidUser = async (discordID, donderID) => {
+    if (!(checkUserExists(discordID))) {
+        console.log('User Already Linked, Please unlink first if you want to use another donderID');
+        return;
+    }
+    if (!(donderID.length == 12)) {
         console.log('Invalid Length');
         return;
     }
@@ -34,9 +38,13 @@ export const linkDonderToDiscord = async (donderID) => {
         console.log('Invalid Character(s)');
         return;
     }
+}
+
+export const linkDonderToDiscord = async (discordID, donderID) => {
+    checkValidUser(discordID, donderID);
 
     // Scrape Test
-    if (await checkValidDonderID(donderID)) {
+    if (await checkValidDonder(donderID)) {
         console.log('Valid ID');
     }
     else {

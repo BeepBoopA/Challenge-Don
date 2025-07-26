@@ -11,10 +11,10 @@ export default {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        const user = interaction.user.username;
+        const userID = interaction.user.id;
         const donderID = interaction.options.getString('donder-id');
 
-        await interaction.reply(`Linking Donder: ${user} & ${donderID}`);
-        linkDonderToDiscord(donderID);
+        await interaction.reply(`Linking Donder: ${userID} & ${donderID}`);
+        linkDonderToDiscord(userID, donderID);
     },
 };
