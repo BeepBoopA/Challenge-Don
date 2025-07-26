@@ -37,6 +37,3 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
     rows = select.all();
     console.log("Challenge - Chart data: ", rows);
 };
-
-// TODO: make insert many (https://github.com/WiseLibs/better-sqlite3/blob/HEAD/docs/api.md)
-
