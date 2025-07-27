@@ -1,5 +1,5 @@
 import { firefox } from 'playwright';
-import { checkUserExists } from '../database/functions/user';
+import { checkUserExists, deleteDiscordDonder, setDiscordDonder } from '../database/functions/user.js';
 
 const checkValidDonder = async (donderID) => {
     const browser = await firefox.launch();
@@ -26,11 +26,11 @@ const checkValidDonder = async (donderID) => {
 }   
 
 const checkValidUser = async (discordID, donderID) => {
-    if (!(checkUserExists(discordID))) {
+    if (checkUserExists(discordID)) {
         console.log('User Already Linked, Please unlink first if you want to use another donderID');
         return;
     }
-    if (!(donderID.length == 12)) {
+    if (!(donderID.length === 12)) {
         console.log('Invalid Length');
         return;
     }
@@ -46,13 +46,17 @@ export const linkDonderToDiscord = async (discordID, donderID) => {
     // Scrape Test
     if (await checkValidDonder(donderID)) {
         console.log('Valid ID');
+        setDiscordDonder(discordID, donderID);
     }
     else {
         console.log('Invalid ID');
     }
 }
 
-// TODO: Add try catch
-// TODO: Link to database
-// TODO: Dont allow link if discordID is already linked
-// TODO: Unlink function
+export const unlinkDonderToDiscord = (discordID) => {
+    if (!(checkUserExists())) {
+        console.log('User is not linked')
+        return;
+    }
+    deleteDiscordDonder(discordID);
+}
