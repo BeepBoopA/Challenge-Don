@@ -6,3 +6,13 @@ export function checkUserExists(discordID) {
     if (user == []) { return false; }
     return true;
 }
+
+export function setDiscordDonder(discordID, donderID) {
+    const insert = db.prepare(`INSERT INTO users (discord_id, donder_id) VALUES (?, ?)`);
+    insert.run(discordID, donderID);
+}
+
+export function deleteDiscordDonder(discordID) {
+    const remove = db.prepare(`DELETE FROM users WHERE discord_id=?`);
+    remove.run(discordID);
+}
