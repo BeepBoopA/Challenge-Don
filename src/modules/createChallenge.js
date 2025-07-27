@@ -9,16 +9,16 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
 
     insert = db.prepare("INSERT INTO charts (name) VALUES (?)");
     const songIDs = [
-        insert.run(`${song1}`).lastInsertRowid,
-        insert.run(`${song2}`).lastInsertRowid,
-        insert.run(`${song3}`).lastInsertRowid,
+        insert.run(song1).lastInsertRowid,
+        insert.run(song2).lastInsertRowid,
+        insert.run(song3).lastInsertRowid,
     ];
 
     insert = db.prepare(
         "INSERT INTO challenge_charts (challenge_id, chart_id) VALUES (?, ?)"
     );
     for (let i = 0; i < songIDs.length; i++) {
-        insert.run(`${challengeID}`, `${songIDs[i]}`);
+        insert.run(challengeID, songIDs[i]);
     }
 
     // Test:
