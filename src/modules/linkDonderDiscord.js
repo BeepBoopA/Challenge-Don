@@ -46,7 +46,11 @@ export const linkDonderToDiscord = async (discordID, donderID) => {
     // Scrape Test
     if (await checkValidDonder(donderID)) {
         console.log('Valid ID');
+<<<<<<< HEAD
         setDiscordDonder(discordID, donderID);
+=======
+        linkDonderToDiscord(discordID, donderID);
+>>>>>>> e457b5c2aa938b7bb15955ce1c6a54cd5d2c9d7d
     }
     else {
         console.log('Invalid ID');
@@ -58,5 +62,9 @@ export const unlinkDonderToDiscord = (discordID) => {
         console.log('User is not linked')
         return;
     }
+<<<<<<< HEAD
     deleteDiscordDonder(discordID);
+=======
+    unlinkDonderToDiscord(discordID);
+>>>>>>> e457b5c2aa938b7bb15955ce1c6a54cd5d2c9d7d
 }
