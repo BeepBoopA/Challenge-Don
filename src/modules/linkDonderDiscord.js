@@ -25,23 +25,26 @@ const checkValidDonder = async (donderID) => {
     return donderExists;
 }   
 
-const checkValidUser = async (discordID, donderID) => {
+const checkValidUser = (discordID, donderID) => {
     if (checkUserExists(discordID)) {
         console.log('User Already Linked, Please unlink first if you want to use another donderID');
-        return;
+        return false;
     }
     if (!(donderID.length === 12)) {
         console.log('Invalid Length');
-        return;
+        return false;
     }
     if (!(/^\d+$/.test(donderID))) {
         console.log('Invalid Character(s)');
-        return;
+        return false;
     }
+    return true;
 }
 
 export const linkDonderToDiscord = async (discordID, donderID) => {
-    checkValidUser(discordID, donderID);
+    if (!(checkValidUser(discordID, donderID))) {
+        return;
+    }
 
     // Scrape Test
     if (await checkValidDonder(donderID)) {
@@ -53,10 +56,11 @@ export const linkDonderToDiscord = async (discordID, donderID) => {
     }
 }
 
-export const unlinkDonderToDiscord = (discordID) => {
-    if (!(checkUserExists())) {
+export const unlinkDonderToDiscord = async (discordID) => {
+    if (!(checkUserExists(discordID))) {
         console.log('User is not linked')
         return;
     }
     deleteDiscordDonder(discordID);
+    console.log('Deleted User');
 }

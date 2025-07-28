@@ -6,7 +6,7 @@ const db = new Database('data/data.db');
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
         discord_id      TEXT PRIMARY KEY,
-        donder_id       TEXT NOT NULL
+        donder_id       TEXT NOT NULL UNIQUE
     );
 
     CREATE TABLE IF NOT EXISTS challenges (
@@ -38,7 +38,7 @@ db.exec(`
 
         PRIMARY KEY (challenge_id, chart_id, donder_id),
         FOREIGN KEY (challenge_id, chart_id) REFERENCES challenge_charts(challenge_id, chart_id),
-        FOREIGN KEY (donder_id) REFERENCES users(donder_id)
+        FOREIGN KEY (donder_id) REFERENCES users(donder_id) ON DELETE CASCADE
     );
 `)
 

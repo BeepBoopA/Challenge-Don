@@ -1,9 +1,9 @@
 import db from '../database.js';
 
 export function checkUserExists(discordID) {
-    const user = db.prepare(`SELECT u.discord_id FROM users u WHERE u.discord_id=?`).all(discordID);
+    const user = db.prepare(`SELECT * FROM users WHERE discord_id=?`).all(discordID);
     
-    if (user == []) { return false; }
+    if (user.length === 0) { return false; }
     return true;
 }
 

@@ -8,7 +8,7 @@ export default {
     async execute(interaction) {
         const userID = interaction.user.id;
 
-        await interaction.reply(`Linking Donder: ${userID}`);
+        await interaction.reply(`Unlinking Donder: ${userID}`);
         unlinkDonderToDiscord(userID);
     },
 };
