@@ -15,6 +15,7 @@ export default {
         const donderID = interaction.options.getString('donder-id');
 
         await interaction.reply(`Linking Donder: ${userID} & ${donderID}`);
-        linkDonderToDiscord(userID, donderID);
+        await linkDonderToDiscord(userID, donderID);
+        await interaction.editReply(`Linked!`);
     },
 };
