@@ -4,7 +4,7 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
     // Insert Challenge
     let insert = null;
 
-    insert = db.prepare("INSERT INTO challenges (name) VALUES (?)");
+    insert = db.prepare("INSERT INTO challenge (name) VALUES (?)");
     const challengeID = insert.run(`${challengeName}`).lastInsertRowid;
 
     insert = db.prepare("INSERT INTO charts (name) VALUES (?)");
@@ -25,7 +25,7 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
     let select = null;
     let rows = null;
 
-    select = db.prepare("SELECT * FROM challenges");
+    select = db.prepare("SELECT * FROM challenge");
     rows = select.all();
     console.log("Challenge data: ", rows);
 

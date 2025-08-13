@@ -9,7 +9,7 @@ db.exec(`
         donder_id       TEXT NOT NULL UNIQUE
     );
 
-    CREATE TABLE IF NOT EXISTS challenges (
+    CREATE TABLE IF NOT EXISTS challenge (
         challenge_id    INTEGER PRIMARY KEY AUTOINCREMENT,
         name            TEXT,
         end_time        TEXT
