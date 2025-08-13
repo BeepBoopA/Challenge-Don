@@ -9,6 +9,7 @@ export default {
         const userID = interaction.user.id;
 
         await interaction.reply(`Unlinking Donder: ${userID}`);
-        unlinkDonderToDiscord(userID);
+        await unlinkDonderToDiscord(userID);
+        await interaction.editReply('Unlinked!');
     },
 };
