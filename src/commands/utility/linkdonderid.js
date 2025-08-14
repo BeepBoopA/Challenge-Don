@@ -15,7 +15,10 @@ export default {
         const donderID = interaction.options.getString('donder-id');
 
         await interaction.reply(`Linking Donder: ${userID} & ${donderID}`);
-        await linkDonderToDiscord(userID, donderID);
-        await interaction.editReply(`Linked!`);
+        if (await linkDonderToDiscord(userID, donderID)) {
+            await interaction.editReply(`Linked!`);
+        } else {
+            await interaction.editReply(`Failed to link.`);
+        }
     },
 };

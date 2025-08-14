@@ -1,5 +1,6 @@
 import { firefox } from 'playwright';
 import { checkUserExists, deleteDiscordDonder, setDiscordDonder } from '../database/functions/user.js';
+import { printAllUsers } from '../database/functions/viewDatabase.js';
 
 const checkValidDonder = async (donderID) => {
     const browser = await firefox.launch();
@@ -21,9 +22,21 @@ const checkValidDonder = async (donderID) => {
     // Find donderID
     await page.goto(`https://donderhiroba.jp/user_search.php?exec=1&keyword=${donderID}`);
     const donderExists = await page.locator('.friendArea.clearfix').isVisible();
+    await browser.close();
 
     return donderExists;
 }   
+
+const checkEnvFile = () => {
+    const requiredEnvVars = ['MAIN_BOT_EMAIL', 'MAIN_BOT_PASSWORD'];
+    for (const envVar of requiredEnvVars) {
+        if (!process.env[envVar]) {
+            console.error(`Missing environment variable: ${envVar}`);
+            return false;
+        }
+    }
+    return true;
+}
 
 const checkValidUser = (discordID, donderID) => {
     if (checkUserExists(discordID)) {
@@ -42,6 +55,10 @@ const checkValidUser = (discordID, donderID) => {
 }
 
 export const linkDonderToDiscord = async (discordID, donderID) => {
+    if (!(checkEnvFile())) {
+        return;
+    }
+
     if (!(checkValidUser(discordID, donderID))) {
         return;
     }
@@ -64,3 +81,4 @@ export const unlinkDonderToDiscord = async (discordID) => {
     deleteDiscordDonder(discordID);
     console.log('Deleted User');
 }
+
