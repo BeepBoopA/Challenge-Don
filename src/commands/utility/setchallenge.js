@@ -34,8 +34,16 @@ export default {
         const song2 = interaction.options.getString("song-2");
         const song3 = interaction.options.getString("song-3");
 
-        await createChallenge(challengeName, song1, song2, song3);
-        await interaction.editReply('Challenge Set!')
+        try {
+            if (await createChallenge(challengeName, song1, song2, song3)) {
+                await interaction.editReply('Challenge Set!')
+            } else {
+                await interaction.editReply('Failed to Set Challenge.')
+            }
+        } catch (error) {
+            console.error('Error creating challenge:', error);
+            await interaction.editReply('An error occurred while setting the challenge.');
+        }
     }
 };
 

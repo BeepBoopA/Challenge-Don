@@ -36,4 +36,6 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
     select = db.prepare("SELECT * FROM challenge_charts");
     rows = select.all();
     console.log("Challenge - Chart data: ", rows);
+
+    return true;
 };

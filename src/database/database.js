@@ -26,7 +26,7 @@ db.exec(`
         chart_id        INTEGER NOT NULL,
 
         PRIMARY KEY (challenge_id, chart_id),
-        FOREIGN KEY (challenge_id) REFERENCES challenges(challenge_id),
+        FOREIGN KEY (challenge_id) REFERENCES challenge(challenge_id),
         FOREIGN KEY (chart_id) REFERENCES charts(chart_id)
     );
 
