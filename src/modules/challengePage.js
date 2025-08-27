@@ -1,5 +1,6 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import { getCharts, getScores, getUserPlacement } from '../database/functions/challengeCharts.js';
+import { getLatestChallenge } from '../database/functions/challengeCharts.js';
 
 /*
     images (property)
@@ -68,7 +69,7 @@ class ChallengeBuilder {
             const userPlaceObj = getUserPlacement(challengeID, charts[i], this.userID);
             const userPlaceStr = userPlaceObj['score'];
 
-            const embed = this.createChartEmbed(`${charts[i]['name']}`, 'img', firstPlace, secondPlace, thirdPlace, userPlaceStr);
+            const embed = this.createChartEmbed(`${charts[i]['name']}`, '[IMAGE AT [i]]', firstPlace, secondPlace, thirdPlace, userPlaceStr);
             chartsEmbed.push(embed);
         }
 
@@ -76,7 +77,11 @@ class ChallengeBuilder {
     }
 
     // Replace the parameters when finshed testing
-    pages = [this.createPageMain(1, ['test1', 'test2', 'test3']), ...this.handleChartsEmbed(1, 'test')];
+    getPages() {
+        const latestChallengeID = getLatestChallenge();
+        console.log(latestChallengeID);
+        return [this.createPageMain(latestChallengeID, ['[IMAGE AT [0]]', '[IMAGE AT [1]]', '[IMAGE AT [2]]']), ...this.handleChartsEmbed(latestChallengeID, '[IMPORT IMAGES]')];
+    }
 
     /*
         Do not change CustomId (if so change in viewchallenge.js)

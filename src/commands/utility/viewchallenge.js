@@ -8,7 +8,7 @@ export default {
     async execute(interaction) {
         const cb = new ChallengeBuilder();
         cb.setUserId(interaction.user.id);
-        const pages = cb.pages;
+        const pages = cb.getPages();
         const buttonActionRow = cb.buttonActionRow;
 
         let curPage = 0;

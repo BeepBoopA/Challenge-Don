@@ -1,4 +1,5 @@
 import db from '../database.js'
+import { printAllChallengeCharts, printAllChallenges, printAllUsers } from './viewDatabase.js';
 
 export function getCharts(challengeID) {
     return db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
@@ -24,4 +25,10 @@ export function getUserPlacement(challengeID, chart, userID) {
     // This SHOULD return { discord_id, score, index }
      // please dont break :pray:
     return userScore;
+}
+
+export function getLatestChallenge() {
+    const result = db.prepare(`SELECT challenge_id FROM challenge ORDER BY challenge_id DESC LIMIT 1`).get();
+    console.log(result)
+    return parseInt(result['challenge_id']);
 }
