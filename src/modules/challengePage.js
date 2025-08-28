@@ -1,5 +1,5 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
-import { getCharts, getScores, getUserPlacement } from '../database/functions/challengeCharts.js';
+import { getCharts, getScoreLeader, getScores, getUserPlacement } from '../database/functions/challengeCharts.js';
 import { getLatestChallenge } from '../database/functions/challengeCharts.js';
 
 /*
@@ -17,25 +17,24 @@ class ChallengeBuilder {
         const leaders = [];
 
         for (let i = 0; i < charts.length; i++) {
-            const scores = getScores(challengeID, charts[i]).map((u) => u.score);
-            leaders.push(scores[0] ?? 'No score');
+            leaders.push(getScoreLeader(challengeID, charts[i]));
         }
 
         return new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle('Overview')
             .addFields(
-                { name: 'Chart 1', value: images[0], inline: true },
+                { name: charts[0]['name'], value: images[0], inline: true },
                 { name: '1st Place', value: `${leaders[0]} replace w/ discord img`, inline: true },
                 { name: '', value: '', inline: false },
             )
             .addFields(
-                { name: 'Chart 2', value: images[1], inline: true },
+                { name: charts[1]['name'], value: images[1], inline: true },
                 { name: '1st Place', value: `${leaders[1]} replace w/ discord img`, inline: true },
                 { name: '', value: '', inline: false },
             )
             .addFields(
-                { name: 'Chart 3', value: images[2], inline: true },
+                { name: charts[2]['name'], value: images[2], inline: true },
                 { name: '1st Place', value: `${leaders[2]} replace w/ discord img`, inline: true },
                 { name: '', value: '', inline: false },
             );

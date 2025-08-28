@@ -1,5 +1,5 @@
 import db from '../database.js'
-import { printAllChallengeCharts, printAllChallenges, printAllUsers } from './viewDatabase.js';
+import { printAllChallengeCharts, printAllChallenges, printAllUsers } from './crudDatabase.js';
 
 export function getCharts(challengeID) {
     return db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
@@ -31,4 +31,9 @@ export function getLatestChallenge() {
     const result = db.prepare(`SELECT challenge_id FROM challenge ORDER BY challenge_id DESC LIMIT 1`).get();
     console.log(result)
     return parseInt(result['challenge_id']);
+}
+
+export function getScoreLeader(challengeID, chart) {
+    const scores = getScores(challengeID, chart).map((u) => u.score);
+    return scores[0] ?? 'No score';
 }

@@ -1,6 +1,6 @@
 import { firefox } from 'playwright';
 import { checkUserExists, deleteDiscordDonder, setDiscordDonder } from '../database/functions/user.js';
-import { printAllUsers } from '../database/functions/viewDatabase.js';
+import { printAllUsers } from '../database/functions/crudDatabase.js';
 
 const checkValidDonder = async (donderID) => {
     const browser = await firefox.launch();
