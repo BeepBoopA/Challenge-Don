@@ -44,19 +44,3 @@ export function printAllScores() {
     const scores = db.prepare('SELECT * FROM scores').all();
     console.log('Scores:', scores);
 }
-
-export function createUser(discordID, donderID) {
-    db.prepare(`INSERT INTO users (discord_id, donder_id) VALUES (?, ?)`).run(discordID, donderID);
-}
-
-export function createScore(challengeID, chartID, donderID, score) {
-    db.prepare(`INSERT INTO scores (challenge_id, chart_id, donder_id, score) VALUES (?, ?, ?, ?)`).run(challengeID, chartID, donderID, score);
-}
-
-export function createChallenge(name, endTime=null) {
-    db.prepare(`INSERT INTO challenge (name, end_time) VALUES (?, ?)`).run(name, endTime);
-}
-
-export function createChart(name, artist) {
-    db.prepare(`INSERT INTO chart (name, artist) VALUES (?, ?)`).run(name, artist);
-}
