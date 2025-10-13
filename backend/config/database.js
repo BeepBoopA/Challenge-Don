@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
 
-const db = new Database('../data.db');
+const db = new Database('../data/data.db');
 
 // Tables - hopefully this doesnt break somehow...
 db.exec(`
