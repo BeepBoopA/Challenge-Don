@@ -8,7 +8,6 @@ export const chartRoutes = (() => {
     router.get('/:chart_id', getCharts);
     router.put('/', updateChart);
     router.delete('/:chart_id', deleteChart);
-    router.get('/:challenge_id', getChartsFromChallenge);
 
     return router;
 });

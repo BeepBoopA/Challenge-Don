@@ -21,21 +21,5 @@ export const createChallenge = async (challengeName, song1, song2, song3) => {
         insert.run(challengeID, songIDs[i]);
     }
 
-    // Test:
-    let select = null;
-    let rows = null;
-
-    select = db.prepare("SELECT * FROM challenge");
-    rows = select.all();
-    console.log("Challenge data: ", rows);
-
-    select = db.prepare("SELECT * FROM charts");
-    rows = select.all();
-    console.log("Chart data: ", rows);
-
-    select = db.prepare("SELECT * FROM challenge_charts");
-    rows = select.all();
-    console.log("Challenge - Chart data: ", rows);
-
     return true;
 };

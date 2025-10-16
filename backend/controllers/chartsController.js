@@ -67,20 +67,3 @@ export const deleteChart = (req, res) => {
         res.status(500).json({ error: error, message: 'Failed to delete chart' });
     }
 }
-
-export const getChartsFromChallenge = (req, res) => {
-    const { challenge_id } = req.params;
-    if (!challenge_id) {
-        return res.status(400).json({ error: 'Missing required fields: challenge_id' });
-    }
-
-    try {
-        const charts = getChartsFromChallenge(challenge_id);
-        res.status(200).json({ message: 'Charts fetched successfully' });
-
-        return res.json(charts);
-    }
-    catch (error) {
-        res.status(500).json({ error: error, message: 'Failed to fetch charts from challenge' });
-    }
-}

@@ -1,7 +1,7 @@
 {
-  "name": "challenge-don",
+  "name": "frontend",
   "version": "1.0.0",
-  "description": "Challenge Bot For Taiko no Tatsujin on Discord",
+  "description": "Discord Front End for Challenge-Don",
   "main": "src\\index.js",
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/BeepBoopA/Challenge-Don#readme",
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
+    "axios": "^1.12.2",
     "discord.js": "^14.20.0",
     "dotenv": "^16.5.0"
   },

@@ -25,3 +25,8 @@ export function getLatestChallenge() {
 
     return parseInt(result['challenge_id']);
 }
+
+export function getChartsForChallenge(challengeID) {
+    const result = db.prepare(`SELECT c.* FROM charts c JOIN challenge_charts cc ON c.chart_id=cc.chart_id WHERE cc.challenge_id=?`).all(challengeID);
+    console.log('Successfully fetched charts for challengeID:', result);
+}

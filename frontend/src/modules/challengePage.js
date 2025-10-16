@@ -1,22 +1,30 @@
 import { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
-import { getCharts, getScoreLeader, getScores, getUserPlacement } from '../database/functions/challengeCharts.js';
-import { getLatestChallenge } from '../database/functions/challengeCharts.js';
+import { axios } from 'axios';
 
 /*
     images (property)
         need to be a array of exactly 3 images
         preferably same size images
 */
+
 class ChallengeBuilder {
     static userID = null;
 
     setUserId(userID) { this.userID = userID; }
 
     createPageMain(challengeID, images) { 
-        const charts = getCharts(challengeID);
+        const charts = axios.get(`http://localhost:3000/challenges/${challengeID}}`);
         const leaders = [];
 
         for (let i = 0; i < charts.length; i++) {
+            const leader = axios.get(`http://localhost:3000/scores/`, {
+                params: {
+                    challenge_id: challengeID,
+                    chart_id: charts[i]['id (fixme)'],
+                }
+            }
+            ); 
+
             leaders.push(getScoreLeader(challengeID, charts[i]));
         }
 

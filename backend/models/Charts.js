@@ -21,8 +21,3 @@ export function deleteChart(chartID) {
     const result = db.prepare(`DELETE FROM charts WHERE chart_id=?`).run(chartID);
     console.log('Successfully deleted chart:', result);
 }
-
-export function getChartsFromChallenge(challengeID) {
-    return db.prepare(`SELECT c.* FROM charts c NATURAL JOIN challenge_charts cc
-                       WHERE cc.challenge_id=?`).all(challengeID);
-}
